@@ -13,6 +13,7 @@ import controller.TradeRankController;
 import junit.framework.TestCase;
 import model.Constants;
 import model.SettledTrade;
+import model.TradeType;
 import model.custom.TradeAggregrates;
 
 public class TradeRankControllerTest extends TestCase{
@@ -75,7 +76,7 @@ public  ArrayList<SettledTrade> createSampleTrades() throws ParseException {
 	ArrayList<SettledTrade> listTrades = new ArrayList<SettledTrade>();
 	
 	listTrades.add(new SettledTrade("Cipla", getDate("21/Sep/2018"), getDate("21/Sep/2018"), 
-			"INR", 0.014f, 1000, Constants.TRADE_BUY, 95.01));
+			"INR", 0.014f, 1000, TradeType.BUY, 95.01));
 	listTrades.add(new SettledTrade("Axis", getDate("21/Sep/2018"), getDate("21/Sep/2018"), 
 			"AED", 0.014f, 900, Constants.TRADE_BUY, 121.01));
 	listTrades.add(new SettledTrade("ABC", getDate("21/Sep/2018"), getDate("21/Sep/2018"), 
