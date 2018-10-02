@@ -1,7 +1,7 @@
 package dao;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -11,51 +11,34 @@ import model.TradeType;
 
 public class TradeSettlementDaoImpl implements ITradeSettlementDao{
 
-	private Map<Date, Map<TradeType, List<SettledTrade>>> allTradesMap;
-	
+	private Map<LocalDate, Map<TradeType, List<SettledTrade>>> allTradesMap;
+	/**
+	 * This method creates trade entry after doing settlement.
+	 * @param trade - SettledTrade
+	 * @throws Exception 
+	 */
 	public void saveSettledTrade(SettledTrade trade) throws Exception {
 		Map<TradeType, List<SettledTrade>> tradeMapbyDate;
 		List<SettledTrade> tradeListbyType;
 		if(trade == null || trade.getSettleDate() == null || trade.getTradeType() == null) {
 			throw new Exception("Trade or Trade Settlement Date or Trade Type cannot be Null");
 		}
-		if(allTradesMap == null) {
-			allTradesMap = new HashMap<Date, Map<TradeType, List<SettledTrade>>>();		
-			tradeMapbyDate = new HashMap<TradeType, List<SettledTrade>>();
-			
-			tradeListbyType = new ArrayList<SettledTrade>();
-			tradeListbyType.add(trade);
+		allTradesMap = (allTradesMap == null) ? (new HashMap<LocalDate, Map<TradeType, List<SettledTrade>>>()) : allTradesMap;
+		tradeMapbyDate = (allTradesMap.get(trade.getSettleDate()) == null) ? (new HashMap<TradeType, List<SettledTrade>>()) : allTradesMap.get(trade.getSettleDate());
 		
-			tradeMapbyDate.put(trade.getTradeType(), tradeListbyType);		
-			allTradesMap.put(trade.getSettleDate(), tradeMapbyDate);
-		}
-		else {
-			tradeMapbyDate = allTradesMap.get(trade.getSettleDate());
-			if(tradeMapbyDate == null) {
-				tradeMapbyDate = new HashMap<TradeType, List<SettledTrade>>();				
-				tradeListbyType = new ArrayList<SettledTrade>();
-				
-				tradeListbyType.add(trade);
-			
-				tradeMapbyDate.put(trade.getTradeType(), tradeListbyType);			
-				allTradesMap.put(trade.getSettleDate(), tradeMapbyDate);
-			}
-			else {
-				tradeListbyType = tradeMapbyDate.get(trade.getTradeType());
-				if(tradeListbyType == null) {
-					tradeListbyType = new ArrayList<SettledTrade>();
-					
-					tradeListbyType.add(trade);					
-					tradeMapbyDate.put(trade.getTradeType(), tradeListbyType);
-				}
-				else {
-					tradeListbyType.add(trade);					
-				}
-			}
-		}		
+		tradeListbyType = (tradeMapbyDate.get(trade.getTradeType()) == null) ? new ArrayList<SettledTrade>() : (tradeMapbyDate.get(trade.getTradeType()));
+		
+		tradeListbyType.add(trade);
+	
+		tradeMapbyDate.put(trade.getTradeType(), tradeListbyType);			
+		allTradesMap.put(trade.getSettleDate(), tradeMapbyDate);
 	}
-
-	public Map<Date, Map<TradeType, List<SettledTrade>>> getSettledTrades() throws Exception {
+	/**
+	 * This method return  trade map according to the date.
+	 * @return Map<LocalDate, Map<TradeType, List<SettledTrade>>> - allTradesMap
+	 * @throws Exception 
+	 */
+	public Map<LocalDate, Map<TradeType, List<SettledTrade>>> getSettledTrades() throws Exception {
 
 		return allTradesMap;
 	}

@@ -1,12 +1,6 @@
 package controller;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.time.LocalDate;
 
 import org.apache.log4j.Logger;
 
@@ -32,28 +26,28 @@ public class MainTradeScreen {
 		try {			
 			createSampleTrades(controller);				
 			
-			double outgoingGross = controller.getTradeAggregate(getDate("21/Sep/2018"), TradeType.BUY);
+			double outgoingGross = controller.getTradeAggregate(LocalDate.of(2018, 9, 21), TradeType.BUY);
 			
-			generateOutgoingAggregrateReport(getDate("21/Sep/2018"), outgoingGross);
+			generateOutgoingAggregrateReport(LocalDate.of(2018, 9, 21), outgoingGross);
 			
-			double incomingGross = controller.getTradeAggregate(getDate("23/Sep/2018"), TradeType.SELL);
+			double incomingGross = controller.getTradeAggregate(LocalDate.of(2018, 9, 23), TradeType.SELL);
 			
-			generateIncomingAggregrateReport(getDate("23/Sep/2018"), incomingGross);
+			generateIncomingAggregrateReport(LocalDate.of(2018, 9, 23), incomingGross);
 			
-			String topOutgoingEntity = controller.getEntityRanking(getDate("21/Sep/2018"), TradeType.BUY);
+			String topOutgoingEntity = controller.getEntityRanking(LocalDate.of(2018, 9, 21), TradeType.BUY);
 			
-			generateBuyEntityReport(getDate("21/Sep/2018"), topOutgoingEntity);
+			generateBuyEntityReport(LocalDate.of(2018, 9, 21), topOutgoingEntity);
 			
-			String topIncomingEntity = controller.getEntityRanking(getDate("23/Sep/2018"), TradeType.SELL);			
+			String topIncomingEntity = controller.getEntityRanking(LocalDate.of(2018, 9, 23), TradeType.SELL);			
 		
-			generateSellEntityReport(getDate("23/Sep/2018"), topIncomingEntity);
+			generateSellEntityReport(LocalDate.of(2018, 9, 23), topIncomingEntity);
 			
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
-	private static void generateSellEntityReport(Date date, String topIncomingEntity) {
+	private static void generateSellEntityReport(LocalDate date, String topIncomingEntity) {
 		log.info("                                                                                                ");
 		log.info("                                                                                                ");
 		log.info("Top Entity for Incoming based on Total Traded Amount in USD ");
@@ -69,7 +63,7 @@ public class MainTradeScreen {
 	 * This method generates Outgoing trades report.
 	 * @param buyEntities - list of consolidated entities buy figure
 	 */
-	private static void generateBuyEntityReport(Date date, String topOutgoingEntity) {
+	private static void generateBuyEntityReport(LocalDate date, String topOutgoingEntity) {
 		log.info("                                                                                                ");
 		log.info("                                                                                                ");
 		log.info("Top Entity for Outgoing based on Total Traded Amount in USD ");
@@ -89,32 +83,27 @@ public class MainTradeScreen {
 	 */
 	public static void createSampleTrades(TradeController controller) throws Exception {		
 		
-		controller.createTrade(new SettledTrade("Cipla", getDate("21/Sep/2018"), "INR", 0.014f, 1000, TradeType.BUY, 95.01));
-		controller.createTrade(new SettledTrade("Axis", getDate("21/Sep/2018"),	"AED", 0.014f, 900, TradeType.BUY, 121.01));
-		controller.createTrade(new SettledTrade("ABC", getDate("21/Sep/2018"), "SAR", 0.73f, 100, TradeType.BUY, 5.01));
-		controller.createTrade(new SettledTrade("Cipla", getDate("21/Sep/2018"), "INR", 0.014f, 100, TradeType.BUY, 95.01));
-		controller.createTrade(new SettledTrade("Cipla", getDate("21/Sep/2018"), "INR", 0.014f, 600, TradeType.SELL, 95.01));
-		controller.createTrade(new SettledTrade("Axis", getDate("21/Sep/2018"), "AED", 0.014f, 100, TradeType.SELL, 121.01));
-		controller.createTrade(new SettledTrade("ABC", getDate("21/Sep/2018"), 	"SAR", 0.73f, 500, TradeType.SELL, 5.01));
-		controller.createTrade(new SettledTrade("Cipla", getDate("21/Sep/2018"), "INR", 0.014f, 200, TradeType.SELL, 95.01));		
+		controller.createTrade(new SettledTrade("SUN", LocalDate.of(2018, 9, 21), Constants.CURRENCY_GBP, 1.3f, 1000, TradeType.BUY, 95.01));
+		controller.createTrade(new SettledTrade("ACC", LocalDate.of(2018, 9, 22),	Constants.CURRENCY_GBP, 1.3f, 900, TradeType.BUY, 121.01));
+		controller.createTrade(new SettledTrade("ABC", LocalDate.of(2018, 9, 23), Constants.CURRENCY_GBP, 1.3f, 100, TradeType.BUY, 5.01));
+		controller.createTrade(new SettledTrade("AXS", LocalDate.of(2018, 9, 24), Constants.CURRENCY_GBP, 1.3f, 100, TradeType.BUY, 95.01));
+		controller.createTrade(new SettledTrade("AXS", LocalDate.of(2018, 9, 24), Constants.CURRENCY_GBP, 1.3f, 780, TradeType.BUY, 95.01));
+		controller.createTrade(new SettledTrade("AXS", LocalDate.of(2018, 9, 25), Constants.CURRENCY_GBP, 1.3f, 780, TradeType.SELL, 95.01));
 		
+		controller.createTrade(new SettledTrade("Cipla", LocalDate.of(2018, 9, 21), Constants.CURRENCY_AED, 0.27f, 600, TradeType.SELL, 95.01));
+		controller.createTrade(new SettledTrade("AXS", LocalDate.of(2018, 9, 22),Constants.CURRENCY_AED, 0.27f, 100, TradeType.SELL, 121.01));
+		controller.createTrade(new SettledTrade("ABCD", LocalDate.of(2018, 9, 23), 	Constants.CURRENCY_AED, 0.27f, 500, TradeType.SELL, 5.01));
+		controller.createTrade(new SettledTrade("THG", LocalDate.of(2018, 9, 24), Constants.CURRENCY_AED, 0.27f, 200, TradeType.SELL, 95.01));
+		controller.createTrade(new SettledTrade("ABCD", LocalDate.of(2018, 9, 23), 	Constants.CURRENCY_AED, 0.27f, 800, TradeType.SELL, 5.01));
+		controller.createTrade(new SettledTrade("ABCD", LocalDate.of(2018, 9, 25), 	Constants.CURRENCY_AED, 0.27f, 800, TradeType.BUY, 5.01));
 	}
-	private static Date getDate(String date) throws ParseException {		
-		return format.parse(date);
-	}
-	/**
-	 * Simpledateformat instance
-	 */
-	
-	private static SimpleDateFormat format = new SimpleDateFormat(Constants.Date_Pattern);
-	
-	
+		
 	/**
 	 * This method generates report for everyday basis Gross Incoming/Outgoing figures.
 	 * @param outgoingGross 
 	 * @param date	
 	 */
-	private static void generateIncomingAggregrateReport(Date date, double incomingGross) {
+	private static void generateIncomingAggregrateReport(LocalDate date, double incomingGross) {
 		log.info("                                                                                                ");
 		log.info("                                                                                                ");
 		log.info("Trade Amount Settled Everyday in USD Incoming ");
@@ -128,16 +117,16 @@ public class MainTradeScreen {
 	/**
 	 * This method generates report for everyday basis Gross Incoming/Outgoing figures.
 	 * @param outgoingGross 
-	 * @param date	
+	 * @param localDate	
 	 */
-	private static void generateOutgoingAggregrateReport(Date date, double outgoingGross) {
+	private static void generateOutgoingAggregrateReport(LocalDate localDate, double outgoingGross) {
 		log.info("                                                                                                ");
 		log.info("                                                                                                ");
 		log.info("Trade Amount Settled Everyday in USD Outgoing ");
 		log.info("Settlement-Date                 Amount-Outgoing");
 		log.info("---------------------------------------------------");		
 		 
-		 log.info(date+"                        "+outgoingGross);
+		 log.info(localDate+"                        "+outgoingGross);
 		
 		log.info("--------------------------------------------------------");
 	}

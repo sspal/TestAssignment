@@ -1,6 +1,6 @@
 package service;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 import model.SettledTrade;
 import model.TradeType;
@@ -22,13 +22,13 @@ public interface ITradeSettlementService {
 	 * @param TradeType - tradeType
 	 * @return double
 	 */
-	double getTradeAggregate(Date requestDate, TradeType tradeType) throws Exception;
+	double getTradeAggregate(LocalDate requestDate, TradeType tradeType) throws Exception;
 	/**
 	 * public getEntityRanking() method for trade ranking figure calculation
-	 * @param requestDate - Date
+	 * @param requestDate - LocalDate
 	 * @param TradeType - tradeType
 	 * @return String
 	 * @throws Exception 
 	 */
-	String getEntityRanking(Date requestDate, TradeType tradeType) throws Exception;
+	String getEntityRanking(LocalDate requestDate, TradeType tradeType) throws Exception;
 }

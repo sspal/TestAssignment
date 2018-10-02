@@ -1,7 +1,7 @@
 package service;
 
+import java.time.LocalDate;
 import java.util.Comparator;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -33,13 +33,13 @@ public class TradeSettlementServiceImpl implements ITradeSettlementService{
 	}
 	/**
 	 * This method gets aggregated figures of trades for a date.
-	 * @param requestDate -  Date
+	 * @param requestDate -  LocalDate
 	 * @param tradeType - TradeType
 	 * @return double  -double value of gross trade value
 	 * @throws Exception 
 	 */
-	public double getTradeAggregate(Date requestDate, TradeType tradeType) throws Exception {
-		Map<Date, Map<TradeType, List<SettledTrade>>> allTradesMap = dao.getSettledTrades();
+	public double getTradeAggregate(LocalDate requestDate, TradeType tradeType) throws Exception {
+		Map<LocalDate, Map<TradeType, List<SettledTrade>>> allTradesMap = dao.getSettledTrades();
 		Map<TradeType, List<SettledTrade>> tradeMapbyDate = allTradesMap.get(requestDate);
 		double grossValue = 0.0;
 		if(tradeMapbyDate != null) {
@@ -52,9 +52,15 @@ public class TradeSettlementServiceImpl implements ITradeSettlementService{
 		}
 		return grossValue;
 	}
-	
-	public String getEntityRanking(Date requestDate, TradeType tradeType) throws Exception {
-		Map<Date, Map<TradeType, List<SettledTrade>>> allTradesMap = dao.getSettledTrades();
+	/**
+	 * public getEntityRanking() method for trade ranking figure calculation
+	 * @param requestDate - LocalDate
+	 * @param TradeType - tradeType
+	 * @return String
+	 * @throws Exception 
+	 */
+	public String getEntityRanking(LocalDate requestDate, TradeType tradeType) throws Exception {
+		Map<LocalDate, Map<TradeType, List<SettledTrade>>> allTradesMap = dao.getSettledTrades();
 		Map<TradeType, List<SettledTrade>> tradeMapbyDate = allTradesMap.get(requestDate);
 		String topEntity = null;		
 		

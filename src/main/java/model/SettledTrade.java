@@ -1,6 +1,6 @@
 package model;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 /**
  * 
@@ -8,7 +8,7 @@ import java.util.Date;
  *
  */
 public class SettledTrade extends Trade{
-	private Date settleDate;
+	private LocalDate settleDate;
 	private double tradeTotalValue;
 /**
  * Constructor that sets values into super class constructor
@@ -20,16 +20,16 @@ public class SettledTrade extends Trade{
  * @param tradeType
  * @param unitPrice
  */
-	public SettledTrade(String tradeEntity, Date instructDate, String currency, float fxRate,
+	public SettledTrade(String tradeEntity, LocalDate instructDate, String currency, float fxRate,
 			long units, TradeType tradeType, double unitPrice) {
 		super(tradeEntity, instructDate, currency, fxRate, units, tradeType, unitPrice);
 		}
 
-	public Date getSettleDate() {
+	public LocalDate getSettleDate() {
 		return settleDate;
 	}
 
-	public void setSettleDate(Date settleDate) {
+	public void setSettleDate(LocalDate settleDate) {
 		this.settleDate = settleDate;
 	}
 

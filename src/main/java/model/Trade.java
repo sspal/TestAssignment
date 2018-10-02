@@ -1,6 +1,6 @@
 package model;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.Random;
 
 public class Trade {
@@ -15,7 +15,7 @@ public class Trade {
 	/**
 	 * instructionDate
 	 */
-	private final Date instructDate;
+	private final LocalDate instructDate;
 	/**
 	 * currency
 	 */
@@ -48,7 +48,7 @@ public class Trade {
 	 * @param tradeType
 	 * @param unitPrice
 	 */
-	public Trade(String tradeEntity, Date instructDate, 
+	public Trade(String tradeEntity, LocalDate instructDate, 
 			String currency, float fxRate,
 			long units, TradeType tradeType, double unitPrice) {
 		long rand_long = rand.nextLong(); 
@@ -73,7 +73,7 @@ public class Trade {
 	}
 
 
-	public Date getInstructDate() {
+	public LocalDate getInstructDate() {
 		return instructDate;
 	}
 

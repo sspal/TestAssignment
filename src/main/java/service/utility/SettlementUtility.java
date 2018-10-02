@@ -1,16 +1,14 @@
 package service.utility;
 
 import java.text.ParseException;
-import java.util.Calendar;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
 
 import model.Constants;
 import model.SettledTrade;
 
 public class SettlementUtility {
-	/**
-	 * Calendar instance
-	 */
-	private static Calendar c = Calendar.getInstance();
+	
 	/**
 	 * public applySettlement() method for trade settlement
 	 * @param trades - List<SettledTrade>
@@ -18,7 +16,7 @@ public class SettlementUtility {
 	 * @throws Exception 
 	 */
 	public static void applySettlement(SettledTrade trade) throws Exception {				
-		applySettlementDate(trade);
+		trade = applySettlementDate(trade);
 		trade.setTradeTotalValue(getTotalTradeAmount(trade.getUnitPrice(), trade.getUnits(), trade.getFxRate()));		
 	}
 	
@@ -26,37 +24,23 @@ public class SettlementUtility {
 	 * private applySettlementDate() method for trade settlement
 	 * @param trade - SettledTrade
 	 * @return void
+	 * @throws Exception 
 	 * @exception ParseException
 	 */
-	private static void applySettlementDate(SettledTrade trade) {
-		c.setTime(trade.getInstructDate());		
-		
+	private static SettledTrade applySettlementDate(SettledTrade trade) throws Exception {		
 		boolean nonGulfCurrency = checkNonGulfCurrency(trade.getCurrency());
-		
-		int dayInput = c.get(Calendar.DAY_OF_WEEK);
-		int dayDjustment = 0;
-		
-		switch(dayInput) {
-		case 1 : {
-			dayDjustment = (nonGulfCurrency) ? 1 : 0;			
-			break;
-		}
-		case 2 : case 3 : case 4 : case 5 : {
-			dayDjustment = 0;			
-			break;
+		LocalDate date = trade.getInstructDate();
+		if(date != null) {
+		while((!nonGulfCurrency && date.getDayOfWeek() == DayOfWeek.FRIDAY) || (date.getDayOfWeek() == DayOfWeek.SATURDAY) 
+				|| (nonGulfCurrency && date.getDayOfWeek() == DayOfWeek.SUNDAY))
+		{
+			date = date.plusDays(1);
 		}		
-		case 6 : {
-			dayDjustment = (nonGulfCurrency) ?0 : 2;	
-			break;
-		}
-		case 7 :  {
-			dayDjustment =  (nonGulfCurrency) ? 2 : 1;
-			break;
-		}		
-	}
-		c.add(Calendar.DAY_OF_MONTH, dayDjustment);
-		trade.setSettleDate(c.getTime());
 		
+		trade.setSettleDate(date);	
+		return trade;
+		}
+		throw new Exception("InstructionDate cannot be null");
 	}
 
 	private static double getTotalTradeAmount(double unitPrice, long units, float fxRate) {

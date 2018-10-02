@@ -1,8 +1,6 @@
 package dao;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
@@ -16,57 +14,52 @@ import model.SettledTrade;
 import model.TradeType;
 
 public class TradeSettlementDaoImplTest  extends TestCase{
-	TradeSettlementDaoImpl classtoTest;
-	/**
-	 * Simpledateformat instance
-	 */
+	private TradeSettlementDaoImpl classtoTest;
 	
-	private SimpleDateFormat format;
 	@Before
 	protected void setUp(){
 		classtoTest = new TradeSettlementDaoImpl();
-		format = new SimpleDateFormat(Constants.Date_Pattern);
 	}	
 	
 	@Test
 	public void testSaveSettledTrade() throws Exception {	
-		SettledTrade trade = new SettledTrade("Cipla", getDate("21/Sep/2018"), 
-				"INR", 0.014f, 1000, TradeType.BUY, 95.01);
-		trade.setSettleDate(getDate("21/Sep/2018"));
+		SettledTrade trade = new SettledTrade("Cipla", LocalDate.of(2018, 9, 21), 
+				Constants.CURRENCY_INR, 0.014f, 1000, TradeType.BUY, 95.01);
+		trade.setSettleDate(LocalDate.of(2018, 9, 21));
 		trade.setTradeTotalValue(500);
 		classtoTest.saveSettledTrade(trade);
-		SettledTrade trade1 = new SettledTrade("Cipla", getDate("21/Sep/2018"), 
-				"INR", 0.014f, 500, TradeType.BUY, 95.01);
-		trade1.setSettleDate(getDate("21/Sep/2018"));
+		SettledTrade trade1 = new SettledTrade("Cipla", LocalDate.of(2018, 9, 21), 
+				Constants.CURRENCY_INR, 0.014f, 500, TradeType.BUY, 95.01);
+		trade1.setSettleDate(LocalDate.of(2018, 9, 21));
 		trade1.setTradeTotalValue(100);
 		classtoTest.saveSettledTrade(trade1);
-		SettledTrade trade2 = new SettledTrade("Cipla", getDate("21/Sep/2018"),
-				"INR", 0.014f, 700, TradeType.SELL, 95.01);
-		trade2.setSettleDate(getDate("21/Sep/2018"));
+		SettledTrade trade2 = new SettledTrade("Cipla", LocalDate.of(2018, 9, 21),
+				Constants.CURRENCY_INR, 0.014f, 700, TradeType.SELL, 95.01);
+		trade2.setSettleDate(LocalDate.of(2018, 9, 21));
 		trade2.setTradeTotalValue(1200);
 		classtoTest.saveSettledTrade(trade2);
 		
-		SettledTrade trade3 = new SettledTrade("Cipla", getDate("24/Sep/2018"), 
-				"INR", 0.014f, 700, TradeType.SELL, 95.01);
-		trade3.setSettleDate(getDate("24/Sep/2018"));
+		SettledTrade trade3 = new SettledTrade("Cipla", LocalDate.of(2018, 9, 24), 
+				Constants.CURRENCY_INR, 0.014f, 700, TradeType.SELL, 95.01);
+		trade3.setSettleDate(LocalDate.of(2018, 9, 24));
 		trade3.setTradeTotalValue(1100);
 		classtoTest.saveSettledTrade(trade3);
 		
-		SettledTrade trade4 = new SettledTrade("Cipla", getDate("24/Sep/2018"), 
-				"INR", 0.014f, 700, TradeType.BUY, 95.01);
-		trade4.setSettleDate(getDate("24/Sep/2018"));
+		SettledTrade trade4 = new SettledTrade("Cipla", LocalDate.of(2018, 9, 24), 
+				Constants.CURRENCY_INR, 0.014f, 700, TradeType.BUY, 95.01);
+		trade4.setSettleDate(LocalDate.of(2018, 9, 24));
 		trade4.setTradeTotalValue(1300);
 		classtoTest.saveSettledTrade(trade4);
 		
-		SettledTrade trade5 = new SettledTrade("Cipla", getDate("24/Sep/2018"),  
-				"INR", 0.014f, 700, TradeType.SELL, 95.01);
-		trade5.setSettleDate(getDate("24/Sep/2018"));
+		SettledTrade trade5 = new SettledTrade("Cipla",LocalDate.of(2018, 9, 24),  
+				Constants.CURRENCY_INR, 0.014f, 700, TradeType.SELL, 95.01);
+		trade5.setSettleDate(LocalDate.of(2018, 9, 24));
 		trade5.setTradeTotalValue(1150);
 		classtoTest.saveSettledTrade(trade5);
 		
-		Map<Date, Map<TradeType, List<SettledTrade>>> allTradesMap = classtoTest.getSettledTrades();
+		Map<LocalDate, Map<TradeType, List<SettledTrade>>> allTradesMap = classtoTest.getSettledTrades();
 		assertEquals(2, allTradesMap.size());
-		assertEquals(2, allTradesMap.get(getDate("21/Sep/2018")).get(TradeType.BUY).size());
+		assertEquals(2, allTradesMap.get(LocalDate.of(2018, 9, 21)).get(TradeType.BUY).size());
 	}
 	
 	@Test
@@ -81,22 +74,18 @@ public class TradeSettlementDaoImplTest  extends TestCase{
 	@Test
 	public void testNullTradeTypeSaveSettledTrade() throws Exception {
 		try {
-				SettledTrade trade = new SettledTrade("Cipla", getDate("21/Sep/2018"),  
-						"INR", 0.014f, 700, null, 95.01);
-				trade.setSettleDate(getDate("23/Sep/2018"));
+				SettledTrade trade = new SettledTrade("Cipla", LocalDate.of(2018, 9, 21),  
+						Constants.CURRENCY_INR, 0.014f, 700, null, 95.01);
+				trade.setSettleDate(LocalDate.of(2018, 9, 23));
 				trade.setTradeTotalValue(1150);	
 				classtoTest.saveSettledTrade(trade);
 			}catch(Exception e) {
 				assertEquals("Trade or Trade Settlement Date or Trade Type cannot be Null",e.getMessage());
 			}
 	}
-	private Date getDate(String date) throws ParseException {		
-		return format.parse(date);
-	}
-	
+		
 	@After
 	protected void tearDown(){
 		classtoTest = null;
-		format = null;
 	}
 }

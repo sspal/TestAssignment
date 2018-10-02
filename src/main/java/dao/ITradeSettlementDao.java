@@ -1,6 +1,6 @@
 package dao;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
 
@@ -19,7 +19,7 @@ public interface ITradeSettlementDao {
 	/**
 	 * public getSettledTrades() method for retrieving settled trades from Memory(DB)
 	 
-	 * @return Map<Date, Map<TradeType, SettledTrade>>
+	 * @return Map<LocalDate, Map<TradeType, SettledTrade>>
 	 */
-	 Map<Date, Map<TradeType, List<SettledTrade>>> getSettledTrades() throws Exception;
+	 Map<LocalDate, Map<TradeType, List<SettledTrade>>> getSettledTrades() throws Exception;
 }

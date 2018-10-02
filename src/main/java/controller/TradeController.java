@@ -1,6 +1,6 @@
 package controller;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 import dao.TradeSettlementDaoImpl;
 import model.SettledTrade;
@@ -28,12 +28,12 @@ public class TradeController {
 		
 		/**
 		 * This method gets aggregated figures of trades for a date.
-		 * @param requestDate -  Date
+		 * @param requestDate -  LocalDate
 		 * @param tradeType - TradeType
 		 * @return double  -double value of gross trade value
 		 * @throws Exception 
 		 */
-		public double getTradeAggregate(Date requestDate, TradeType tradeType) throws Exception {
+		public double getTradeAggregate(LocalDate requestDate, TradeType tradeType) throws Exception {
 				settlementService = getTradeSettlementService();
 				return settlementService.getTradeAggregate(requestDate, tradeType);
 			}
@@ -42,13 +42,13 @@ public class TradeController {
 	 * This method gets ranking figures of incoming trade entities.
 	 * 
 	 * @param requestDate
-	 *            - Date
+	 *            - LocalDate
 	 * @param tradeType
 	 *            - TradeType
 	 * @return String -Entity value of highest trade as per gross value
 	 * @throws Exception
 	 */
-		public String getEntityRanking(Date requestDate, TradeType tradeType) throws Exception {
+		public String getEntityRanking(LocalDate requestDate, TradeType tradeType) throws Exception {
 			settlementService = getTradeSettlementService();
 			return settlementService.getEntityRanking(requestDate, tradeType);
 		}

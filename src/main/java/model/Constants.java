@@ -8,5 +8,7 @@ package model;
 public interface Constants {
 	public static final String CURRENCY_AED="AED";
 	public static final String CURRENCY_SAR="SAR";
-	public static final String Date_Pattern = "dd/MMM/yyyy";
+	public static final String CURRENCY_INR="INR";
+	public static final String CURRENCY_USD="USD";
+	public static final String CURRENCY_GBP="GBP";
 }
