@@ -1,4 +1,4 @@
-package service;
+package junit.service;
 
 import java.time.LocalDate;
 
@@ -11,6 +11,7 @@ import junit.framework.TestCase;
 import model.Constants;
 import model.SettledTrade;
 import model.TradeType;
+import service.TradeSettlementServiceImpl;
 
 public class TradeSettlementServiceImplTest  extends TestCase{
 	private TradeSettlementServiceImpl classtoTest;

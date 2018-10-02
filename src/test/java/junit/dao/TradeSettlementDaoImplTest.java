@@ -1,4 +1,4 @@
-package dao;
+package junit.dao;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -8,6 +8,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import dao.TradeSettlementDaoImpl;
 import junit.framework.TestCase;
 import model.Constants;
 import model.SettledTrade;

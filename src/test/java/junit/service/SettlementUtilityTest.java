@@ -1,4 +1,4 @@
-package service;
+package junit.service;
 
 import java.time.LocalDate;
 
