@@ -1,11 +1,10 @@
 package utility;
 
-import java.text.ParseException;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 
+import exceptions.SettlementException;
 import model.Currency;
-import model.SettledTrade;
 
 public class SettlementUtility {
 	
@@ -15,41 +14,38 @@ public class SettlementUtility {
 	 * @return void
 	 * @throws Exception 
 	 */
-	public static void applySettlement(SettledTrade trade) throws Exception {				
-		trade = applySettlementDate(trade);
-		trade.setTradeTotalValue(getTotalTradeAmount(trade.getUnitPrice(), trade.getUnits(), trade.getFxRate()));		
-	}
-	
-	/**
-	 * private applySettlementDate() method for trade settlement
-	 * @param trade - SettledTrade
-	 * @return void
-	 * @throws Exception 
-	 * @exception ParseException
-	 */
-	private static SettledTrade applySettlementDate(SettledTrade trade) throws Exception {		
-		boolean nonGulfCurrency = checkNonGulfCurrency(trade.getCurrency());
-		LocalDate date = trade.getInstructDate();
-		if(date != null) {
-		while((!nonGulfCurrency && date.getDayOfWeek() == DayOfWeek.FRIDAY) || (date.getDayOfWeek() == DayOfWeek.SATURDAY) 
-				|| (nonGulfCurrency && date.getDayOfWeek() == DayOfWeek.SUNDAY))
-		{
-			date = date.plusDays(1);
-		}		
+	public static LocalDate assignSettlementDate(LocalDate date, Currency currency) throws Exception {
+		LocalDate sttlementDate = date;
 		
-		trade.setSettleDate(date);	
-		return trade;
+		boolean nonGulfCurrency = (currency != Currency.AED && currency != Currency.SAR);
+		if(date != null) {		
+			DayOfWeek day = date.getDayOfWeek(); 
+			switch(day){
+			case FRIDAY :{
+				if(!nonGulfCurrency) {
+					sttlementDate = date.plusDays(2);
+					}
+				break;
+				}
+			
+			case SATURDAY :{				
+					sttlementDate = (nonGulfCurrency) ? date.plusDays(2) : date.plusDays(1);	
+				break;
+				}
+			
+			case SUNDAY :{				
+				if(nonGulfCurrency) {
+					sttlementDate = date.plusDays(1);
+					}		
+				break;
+				}
+			default:
+				break;
+				
+			}			
+		
+		return sttlementDate;
 		}
-		throw new Exception("InstructionDate cannot be null");
+		throw new SettlementException("InstructionDate cannot be null");			
 	}
-
-	private static double getTotalTradeAmount(double unitPrice, long units, float fxRate) {
-		return unitPrice * units * fxRate;
-	}
-	
-
-	private static boolean checkNonGulfCurrency(Currency currency) {
-		return (currency != Currency.AED && currency != Currency.SAR);
-	}
-
 }

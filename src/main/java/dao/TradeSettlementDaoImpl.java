@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import exceptions.SettlementException;
 import model.SettledTrade;
 import model.TradeType;
 
@@ -21,7 +22,7 @@ public class TradeSettlementDaoImpl implements ITradeSettlementDao{
 		Map<TradeType, List<SettledTrade>> tradeMapbyDate;
 		List<SettledTrade> tradeListbyType;
 		if(trade == null || trade.getSettleDate() == null || trade.getTradeType() == null) {
-			throw new Exception("Trade or Trade Settlement Date or Trade Type cannot be Null");
+			throw new SettlementException("Trade or Trade Settlement Date or Trade Type cannot be Null");
 		}
 		allTradesMap = (allTradesMap == null) ? (new HashMap<LocalDate, Map<TradeType, List<SettledTrade>>>()) : allTradesMap;
 		tradeMapbyDate = (allTradesMap.get(trade.getSettleDate()) == null) ? (new HashMap<TradeType, List<SettledTrade>>()) : allTradesMap.get(trade.getSettleDate());
@@ -35,11 +36,18 @@ public class TradeSettlementDaoImpl implements ITradeSettlementDao{
 	}
 	/**
 	 * This method return  trade map according to the date.
-	 * @return Map<LocalDate, Map<TradeType, List<SettledTrade>>> - allTradesMap
+	 * @param requestDate - LocalDate
+	 * @param TradeType - tradeType
+	 * @return List<SettledTrade> - List<SettledTrade>
 	 * @throws Exception 
 	 */
-	public Map<LocalDate, Map<TradeType, List<SettledTrade>>> getSettledTrades() throws Exception {
-
-		return allTradesMap;
+	public List<SettledTrade> getSettledTrades(LocalDate requestDate,
+			TradeType tradeType) throws Exception {
+		List<SettledTrade> tradeList = null;
+		Map<TradeType, List<SettledTrade>> tradeMapbyDate = allTradesMap.get(requestDate);
+		if(tradeMapbyDate != null) {
+			tradeList = tradeMapbyDate.get(tradeType);
+		}
+		return tradeList;
 	}
 }

@@ -11,11 +11,11 @@ import model.TradeType;
  */
 public interface ITradeSettlementService {
 	/**
-	 * public saveSettledTrades() method for storing settled trades in Memory(DB)
+	 * public saveTrade() method for storing settled trades in Memory(DB)
 	 * @param trade - SettledTrade
 	 * @return void
 	 */
-	void saveSettledTrade(SettledTrade trade) throws Exception;
+	void saveTrade(SettledTrade trade) throws Exception;
 	/**
 	 * public getTradeAggregate() method for trade aggregrated figure calculation
 	 * @param requestDate - Date

@@ -27,10 +27,16 @@ public class TradeSettlementServiceImpl implements ITradeSettlementService{
 	 * @param trade - SettledTrade
 	 * @throws Exception 
 	 */
-	public void saveSettledTrade(SettledTrade trade) throws Exception {
-		SettlementUtility.applySettlement(trade);
+	public void saveTrade(SettledTrade trade) throws Exception {
+		trade.setSettleDate(SettlementUtility.assignSettlementDate(trade.getInstructDate(), trade.getCurrency()));
+		trade.setTradeTotalValue(getTotalTradeAmount(trade.getUnitPrice(), trade.getUnits(), trade.getFxRate()));	
 		dao.saveSettledTrade(trade);		
 	}
+	
+	private double getTotalTradeAmount(double unitPrice, long units, float fxRate) {
+		return unitPrice * units * fxRate;
+	}
+	
 	/**
 	 * This method gets aggregated figures of trades for a date.
 	 * @param requestDate -  LocalDate
@@ -39,17 +45,14 @@ public class TradeSettlementServiceImpl implements ITradeSettlementService{
 	 * @throws Exception 
 	 */
 	public double getTradeAggregate(LocalDate requestDate, TradeType tradeType) throws Exception {
-		Map<LocalDate, Map<TradeType, List<SettledTrade>>> allTradesMap = dao.getSettledTrades();
-		Map<TradeType, List<SettledTrade>> tradeMapbyDate = allTradesMap.get(requestDate);
-		double grossValue = 0.0;
-		if(tradeMapbyDate != null) {
-			List<SettledTrade> tradeList = tradeMapbyDate.get(tradeType);
+		
+		double grossValue = 0.0;		
+			List<SettledTrade> tradeList = dao.getSettledTrades(requestDate, tradeType);
 			if(tradeList != null && tradeList.size() > 0) {
 			for(SettledTrade trade : tradeList) {
 				grossValue = grossValue + trade.getTradeTotalValue();
 				}			
-			}			
-		}
+			}		
 		return grossValue;
 	}
 	/**
@@ -60,12 +63,10 @@ public class TradeSettlementServiceImpl implements ITradeSettlementService{
 	 * @throws Exception 
 	 */
 	public String getEntityRanking(LocalDate requestDate, TradeType tradeType) throws Exception {
-		Map<LocalDate, Map<TradeType, List<SettledTrade>>> allTradesMap = dao.getSettledTrades();
-		Map<TradeType, List<SettledTrade>> tradeMapbyDate = allTradesMap.get(requestDate);
+		
 		String topEntity = null;		
 		
-		if(tradeMapbyDate != null) {
-			List<SettledTrade> tradeList = tradeMapbyDate.get(tradeType);
+			List<SettledTrade> tradeList = dao.getSettledTrades(requestDate, tradeType);
 			if(tradeList != null && tradeList.size() > 0) {
 				HashMap<String, Double> entityMap = new HashMap<String, Double>();
 				Double value = 0.0;
@@ -78,8 +79,7 @@ public class TradeSettlementServiceImpl implements ITradeSettlementService{
 				sortedEntities.putAll(entityMap);
 				entityMap = null;
 				topEntity = sortedEntities.entrySet().iterator().next().getKey();
-			}
-		}
+			}		
 		return topEntity;		
 	}
 	/**
