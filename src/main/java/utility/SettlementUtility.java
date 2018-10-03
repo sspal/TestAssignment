@@ -1,10 +1,10 @@
-package service.utility;
+package utility;
 
 import java.text.ParseException;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 
-import model.Constants;
+import model.Currency;
 import model.SettledTrade;
 
 public class SettlementUtility {
@@ -48,8 +48,8 @@ public class SettlementUtility {
 	}
 	
 
-	private static boolean checkNonGulfCurrency(String currency) {
-		return (currency != Constants.CURRENCY_AED && currency != Constants.CURRENCY_SAR);
+	private static boolean checkNonGulfCurrency(Currency currency) {
+		return (currency != Currency.AED && currency != Currency.SAR);
 	}
 
 }

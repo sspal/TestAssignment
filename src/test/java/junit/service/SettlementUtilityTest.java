@@ -10,7 +10,7 @@ import junit.framework.TestCase;
 import model.Constants;
 import model.SettledTrade;
 import model.TradeType;
-import service.utility.SettlementUtility;
+import utility.SettlementUtility;
 
 public class SettlementUtilityTest extends TestCase{
 	

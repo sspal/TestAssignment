@@ -19,7 +19,7 @@ public class Trade {
 	/**
 	 * currency
 	 */
-	private final String currency;
+	private final Currency currency;
 	/**
 	 * fxRate
 	 */
@@ -49,7 +49,7 @@ public class Trade {
 	 * @param unitPrice
 	 */
 	public Trade(String tradeEntity, LocalDate instructDate, 
-			String currency, float fxRate,
+			Currency currency, float fxRate,
 			long units, TradeType tradeType, double unitPrice) {
 		long rand_long = rand.nextLong(); 
 		this.tradeId = rand_long;
@@ -78,7 +78,7 @@ public class Trade {
 	}
 
 
-	public String getCurrency() {
+	public Currency getCurrency() {
 		return currency;
 	}
 

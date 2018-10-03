@@ -10,7 +10,7 @@ import java.util.TreeMap;
 import dao.ITradeSettlementDao;
 import model.SettledTrade;
 import model.TradeType;
-import service.utility.SettlementUtility;
+import utility.SettlementUtility;
 /**
  * 
  * Trade Settlement Service Class

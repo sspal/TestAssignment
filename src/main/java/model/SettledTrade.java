@@ -20,7 +20,7 @@ public class SettledTrade extends Trade{
  * @param tradeType
  * @param unitPrice
  */
-	public SettledTrade(String tradeEntity, LocalDate instructDate, String currency, float fxRate,
+	public SettledTrade(String tradeEntity, LocalDate instructDate, Currency currency, float fxRate,
 			long units, TradeType tradeType, double unitPrice) {
 		super(tradeEntity, instructDate, currency, fxRate, units, tradeType, unitPrice);
 		}

@@ -4,7 +4,7 @@ import java.time.LocalDate;
 
 import org.apache.log4j.Logger;
 
-import model.Constants;
+import model.Currency;
 import model.SettledTrade;
 import model.TradeType;
 
@@ -83,19 +83,26 @@ public class MainTradeScreen {
 	 */
 	public static void createSampleTrades(TradeController controller) throws Exception {		
 		
-		controller.createTrade(new SettledTrade("SUN", LocalDate.of(2018, 9, 21), Constants.CURRENCY_GBP, 1.3f, 1000, TradeType.BUY, 95.01));
-		controller.createTrade(new SettledTrade("ACC", LocalDate.of(2018, 9, 22),	Constants.CURRENCY_GBP, 1.3f, 900, TradeType.BUY, 121.01));
-		controller.createTrade(new SettledTrade("ABC", LocalDate.of(2018, 9, 23), Constants.CURRENCY_GBP, 1.3f, 100, TradeType.BUY, 5.01));
-		controller.createTrade(new SettledTrade("AXS", LocalDate.of(2018, 9, 24), Constants.CURRENCY_GBP, 1.3f, 100, TradeType.BUY, 95.01));
-		controller.createTrade(new SettledTrade("AXS", LocalDate.of(2018, 9, 24), Constants.CURRENCY_GBP, 1.3f, 780, TradeType.BUY, 95.01));
-		controller.createTrade(new SettledTrade("AXS", LocalDate.of(2018, 9, 25), Constants.CURRENCY_GBP, 1.3f, 780, TradeType.SELL, 95.01));
+		controller.createTrade(new SettledTrade("SUN", LocalDate.of(2018, 9, 21), Currency.GBP, 1.3f, 1000, TradeType.BUY, 95.01));
+		controller.createTrade(new SettledTrade("ACC", LocalDate.of(2018, 9, 22),	Currency.GBP, 1.3f, 900, TradeType.BUY, 121.01));
+		controller.createTrade(new SettledTrade("ABC", LocalDate.of(2018, 9, 23), Currency.GBP, 1.3f, 100, TradeType.BUY, 5.01));
+		controller.createTrade(new SettledTrade("AXS", LocalDate.of(2018, 9, 24), Currency.GBP, 1.3f, 100, TradeType.BUY, 95.01));
+		controller.createTrade(new SettledTrade("AXS", LocalDate.of(2018, 9, 24), Currency.GBP, 1.3f, 780, TradeType.BUY, 95.01));
+		controller.createTrade(new SettledTrade("AXS", LocalDate.of(2018, 9, 25), Currency.GBP, 1.3f, 780, TradeType.SELL, 95.01));
 		
-		controller.createTrade(new SettledTrade("Cipla", LocalDate.of(2018, 9, 21), Constants.CURRENCY_AED, 0.27f, 600, TradeType.SELL, 95.01));
-		controller.createTrade(new SettledTrade("AXS", LocalDate.of(2018, 9, 22),Constants.CURRENCY_AED, 0.27f, 100, TradeType.SELL, 121.01));
-		controller.createTrade(new SettledTrade("ABCD", LocalDate.of(2018, 9, 23), 	Constants.CURRENCY_AED, 0.27f, 500, TradeType.SELL, 5.01));
-		controller.createTrade(new SettledTrade("THG", LocalDate.of(2018, 9, 24), Constants.CURRENCY_AED, 0.27f, 200, TradeType.SELL, 95.01));
-		controller.createTrade(new SettledTrade("ABCD", LocalDate.of(2018, 9, 23), 	Constants.CURRENCY_AED, 0.27f, 800, TradeType.SELL, 5.01));
-		controller.createTrade(new SettledTrade("ABCD", LocalDate.of(2018, 9, 25), 	Constants.CURRENCY_AED, 0.27f, 800, TradeType.BUY, 5.01));
+		controller.createTrade(new SettledTrade("Cipla", LocalDate.of(2018, 9, 21), Currency.AED, 0.27f, 600, TradeType.SELL, 95.01));
+		controller.createTrade(new SettledTrade("AXS", LocalDate.of(2018, 9, 22), Currency.AED, 0.27f, 100, TradeType.SELL, 121.01));
+		controller.createTrade(new SettledTrade("ABCD", LocalDate.of(2018, 9, 23), 	Currency.AED, 0.27f, 500, TradeType.SELL, 5.01));
+		controller.createTrade(new SettledTrade("THG", LocalDate.of(2018, 9, 24), Currency.AED, 0.27f, 200, TradeType.SELL, 95.01));
+		controller.createTrade(new SettledTrade("ABCD", LocalDate.of(2018, 9, 23), 	Currency.AED, 0.27f, 800, TradeType.SELL, 5.01));
+		controller.createTrade(new SettledTrade("ABCD", LocalDate.of(2018, 9, 25), 	Currency.AED, 0.27f, 800, TradeType.BUY, 5.01));
+		
+		controller.createTrade(new SettledTrade("DXB", LocalDate.of(2018, 9, 21), Currency.USD, 1.0f, 1000, TradeType.BUY, 95.01));
+		controller.createTrade(new SettledTrade("ACC", LocalDate.of(2018, 9, 22),	Currency.USD, 1.0f, 900, TradeType.BUY, 121.01));
+		controller.createTrade(new SettledTrade("ABC", LocalDate.of(2018, 9, 23), Currency.USD, 1.0f, 100, TradeType.SELL, 5.01));
+		controller.createTrade(new SettledTrade("AMZN", LocalDate.of(2018, 9, 24), Currency.USD, 1.0f, 100, TradeType.SELL, 95.01));
+		controller.createTrade(new SettledTrade("AMZN", LocalDate.of(2018, 9, 24), Currency.USD, 1.0f, 780, TradeType.SELL, 95.01));
+		controller.createTrade(new SettledTrade("IBM", LocalDate.of(2018, 9, 25), Currency.USD, 1.0f, 780, TradeType.SELL, 95.01));
 	}
 		
 	/**
