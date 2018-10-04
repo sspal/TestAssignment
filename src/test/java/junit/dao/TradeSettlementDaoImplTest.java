@@ -5,7 +5,6 @@ import static org.junit.Assert.assertEquals;
 import java.time.LocalDate;
 import java.util.List;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -86,10 +85,5 @@ public class TradeSettlementDaoImplTest{
 				trade.setSettleDate(LocalDate.of(2018, 9, 23));
 				trade.setTradeTotalValue(1150);	
 				classtoTest.saveSettledTrade(trade);			
-	}
-		
-	@After
-	public void tearDown(){
-		classtoTest = null;
 	}
 }

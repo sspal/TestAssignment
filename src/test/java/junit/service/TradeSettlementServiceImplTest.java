@@ -4,7 +4,6 @@ import static org.junit.Assert.assertEquals;
 
 import java.time.LocalDate;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -101,11 +100,5 @@ public class TradeSettlementServiceImplTest{
 		assertEquals( null, classtoTest.getEntityRanking(LocalDate.of(2018, 9, 21), TradeType.SELL));
 		
 			
-	}
-	
-	
-	@After
-	public void tearDown(){
-		classtoTest = null;		
 	}
 }

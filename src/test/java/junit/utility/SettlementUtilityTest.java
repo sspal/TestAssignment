@@ -4,7 +4,6 @@ import static org.junit.Assert.assertEquals;
 
 import java.time.LocalDate;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
@@ -21,10 +20,6 @@ public class SettlementUtilityTest{
 		
 	}	
 	
-	@After
-	public void tearDown(){
-		
-	}
 	@Rule
 	public ExpectedException expectedExc = ExpectedException.none();
 	@Test
